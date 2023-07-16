@@ -1,47 +1,43 @@
 #!/usr/bin/python3
-"""State BaseMode Class for AirBnB Project."""
+"""Type module of BaseModel"""
+
 import models
 from uuid import uuid4
 from datetime import datetime
 
 
 class BaseModel:
-    """Basemodel for AirBnB Project"""
+    """Type class of BaseModel"""
 
     def __init__(self, *args, **kwargs):
-        """Initialize BaseModel"""
-
-        tformat = "%Y-%m-%dT%H:%M%S.%f"
-        self.id = str(uuid4())
-        self.created_at = datetime.today()
-        self.updated_at = datetime.today()
+        """Type method initialize"""
+        timeformat = "%Y-%m-%dT%H:%M:%S.%f"
         if len(kwargs) != 0:
             for key, val in kwargs.items():
-                if key == "created_at" or key == "update_at":
-                    self.__dict__[key] = datetime.strptime(val, tformat)
-                else:
-                    self.__dict__[key] = val
-            else:
-                models.storage.new(self)
-    
-    def __str__(self):
-        """Return str representation of BaseModel"""
-
-        clsName = self.__class__.__name__
-        return "[{}] ({}) {}".format(clsName, self.id, self.__dict__)
-
+                if key == "created_at" or key == "updated_at":
+                    setattr(self, key, datetime.strptime(val, timeformat))
+                elif key != '__class__':
+                    setattr(self, key, val)
+        else:
+            self.id = str(uuid4())
+            self.created_at = datetime.today()
+            self.updated_at = datetime.today()
+            models.storage.new(self)
 
     def save(self):
-        """Func to update public instance attribute"""
-        
-        self.update_at = datetime.today()
+        """Type method save"""
+        self.updated_at = datetime.today()
         models.storage.save()
 
     def to_dict(self):
-        """Return the dict of BaseModel"""
+        """Type method to_dict"""
+        rt_dict = self.__dict__.copy()
+        rt_dict["created_at"] = self.created_at.isoformat()
+        rt_dict["updated_at"] = self.updated_at.isoformat()
+        rt_dict["__class__"] = self.__class__.__name__
+        return rt_dict
 
-        b_dict = self.__dict__.copy()
-        b_dict["created_at"] = self.created_at.isoformat()
-        b_dict["updated_at"] = self.updated_at.isoformat()
-        b_dict["__class__"] = self.__class__.__name__
-        return b_dict
+    def __str__(self):
+        """Type method __str__"""
+        class_name = self.__class__.__name__
+        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
