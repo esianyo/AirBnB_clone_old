@@ -10,7 +10,7 @@ from models.engine.file_storage import FileStorage
 
 
 class Test_Review(unittest.TestCase):
-    """ Test Cases for
+    """ Test for
     Review Class """
 
     m = Review()

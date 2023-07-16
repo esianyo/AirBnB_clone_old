@@ -10,7 +10,7 @@ from models.engine.file_storage import FileStorage
 
 
 class Test_Amenity(unittest.TestCase):
-    """ Test Cases for
+    """ Test for
     Amenity Class """
 
     examplee = Amenity()

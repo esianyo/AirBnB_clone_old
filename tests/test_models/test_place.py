@@ -10,7 +10,7 @@ from models.engine.file_storage import FileStorage
 
 
 class Test_Place(unittest.TestCase):
-    """ Test Cases for
+    """ Test for
     Place Class """
 
     def setUp(self):

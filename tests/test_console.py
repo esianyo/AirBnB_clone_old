@@ -20,7 +20,8 @@ from models import storage
 
 
 class TestHbnbConsole(unittest.TestCase):
-    """Test class for Hbnb console"""
+    """this will all the
+    aspects about console"""
 
     def setUp(self):
         """Sets up tests
@@ -72,7 +73,7 @@ class TestHBNBcreate(unittest.TestCase):
             self.assertFalse(HBNBCommand().onecmd("create MyModel"))
             self.assertEqual(correct, output.getvalue().strip())
 
-    def test_create_class_object(self):
+    def test_create_object(self):
         with patch("sys.stdout", new=StringIO()) as output:
             self.assertFalse(HBNBCommand().onecmd("create BaseModel"))
             self.assertLess(0, len(output.getvalue().strip()))

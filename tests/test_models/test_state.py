@@ -10,7 +10,7 @@ from models.engine.file_storage import FileStorage
 
 
 class Test_State(unittest.TestCase):
-    """ Test Cases for
+    """ Test for
     State Class """
 
     def setUp(self):
@@ -33,10 +33,10 @@ class Test_State(unittest.TestCase):
         """test if dictionary works"""
         self.assertEqual('to_dict' in dir(self.state), True)
 
-    def test_public(self):
+    def testpublic(self):
         self.assertEqual(str, type(State().id))
 
-    def test_HasAttributes(self):
+    def testHasAttributes(self):
         """verify if attributes exist"""
         self.assertTrue(hasattr(self.state, 'name'))
         self.assertTrue(hasattr(self.state, 'id'))
