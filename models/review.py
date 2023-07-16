@@ -10,6 +10,6 @@ class Review(BaseModel):
     """Initialize review class
     instance
     of basemodel class"""
-    place_id = ''
-    user_id = ''
-    text = ''
+    place_id = ""
+    user_id = ""
+    text = ""

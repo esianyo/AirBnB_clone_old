@@ -9,4 +9,4 @@ class Amenity(BaseModel):
     """Initialize amenity class
     instance
     of basemodel class"""
-    name = ''
+    name = ""
