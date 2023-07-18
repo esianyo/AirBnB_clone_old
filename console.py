@@ -1,12 +1,38 @@
 #!/usr/bin/python3
-<<<<<<< HEAD
-"""Defines the HBnB console."""
+"""
+Defines the HBnB console.
+
+HBNBCommand class
+
+Attributes:
+    __classes (dict): A dictionary of all the classes that can be created.
+
+Methods:
+    emptyline (self): Does nothing.
+    do_quit (self, line): Exits the shell.
+    do_EOF (self, line): Exits the shell.
+    do_create (self, args): Creates a new instance of a class.
+    do_show (self, line): Prints the information of an instance.
+    do_destroy (self, line): Deletes an instance.
+    do_all (self, args): Prints all the instances of a class.
+    do_update (self, args): Updates an instance.
+    do_count (self, line): Counts the number of instances of a class.
+    default (self, arg): Handles unknown commands.
+"""
+
+
 import cmd
 import re
 from shlex import split
 from models import storage
 from models.base_model import BaseModel
-
+from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+import json
 
 def parse(arg):
     curly_braces = re.search(r"\{(.*?)\}", arg)
@@ -27,7 +53,8 @@ def parse(arg):
 
 
 class HBNBCommand(cmd.Cmd):
-    """HBnB command interpreter.
+    """
+    HBnB command interpreter.
 
     Attributes:
         prompt (str): The command prompt.
@@ -35,14 +62,14 @@ class HBNBCommand(cmd.Cmd):
 
     prompt = "(hbnb) "
     __classes = {
-        "BaseModel",
-        "User",
-        "State",
-        "City",
-        "Place",
-        "Amenity",
-        "Review"
-    }
+            "BaseModel",
+            "User",
+            "State",
+            "City",
+            "Place",
+            "Amenity",
+            "Review"
+            }
 
     def emptyline(self):
         """Do nothing upon receiving an empty line."""
@@ -51,12 +78,12 @@ class HBNBCommand(cmd.Cmd):
     def default(self, arg):
         """Default behavior for cmd module when input is invalid"""
         argdict = {
-            "all": self.do_all,
-            "show": self.do_show,
-            "destroy": self.do_destroy,
-            "count": self.do_count,
-            "update": self.do_update
-        }
+                "all": self.do_all,
+                "show": self.do_show,
+                "destroy": self.do_destroy,
+                "count": self.do_count,
+                "update": self.do_update
+                }
         match = re.search(r"\.", arg)
         if match is not None:
             argl = [arg[:match.span()[0]], arg[match.span()[1]:]]
@@ -79,7 +106,8 @@ class HBNBCommand(cmd.Cmd):
         return True
 
     def do_create(self, arg):
-        """Usage: create <class>
+        """
+        Usage: create <class>
         Create a new class instance and print its id.
         """
         argl = parse(arg)
@@ -92,7 +120,8 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_show(self, arg):
-        """Usage: show <class> <id> or <class>.show(<id>)
+        """
+        Usage: show <class> <id> or <class>.show(<id>)
         Display the string representation of a class instance of a given id.
         """
         argl = parse(arg)
@@ -109,8 +138,10 @@ class HBNBCommand(cmd.Cmd):
             print(objdict["{}.{}".format(argl[0], argl[1])])
 
     def do_destroy(self, arg):
-        """Usage: destroy <class> <id> or <class>.destroy(<id>)
-        Delete a class instance of a given id."""
+        """
+        Usage: destroy <class> <id> or <class>.destroy(<id>)
+        Delete a class instance of a given id.
+        """
         argl = parse(arg)
         objdict = storage.all()
         if len(argl) == 0:
@@ -126,9 +157,11 @@ class HBNBCommand(cmd.Cmd):
             storage.save()
 
     def do_all(self, arg):
-        """Usage: all or all <class> or <class>.all()
+        """
+        Usage: all or all <class> or <class>.all()
         Display string representations of all instances of a given class.
-        If no class is specified, displays all instantiated objects."""
+        If no class is specified, displays all instantiated objects.
+        """
         argl = parse(arg)
         if len(argl) > 0 and argl[0] not in HBNBCommand.__classes:
             print("** class doesn't exist **")
@@ -140,10 +173,13 @@ class HBNBCommand(cmd.Cmd):
                 elif len(argl) == 0:
                     objl.append(obj.__str__())
             print(objl)
-            
+
     def do_count(self, arg):
-        """Usage: count <class> or <class>.count()
-        Retrieve the number of instances of a given class."""
+        """
+        Usage:
+            count <class> or <class>.count()
+            Retrieve the number of instances of a given class.
+        """
         argl = parse(arg)
         count = 0
         for obj in storage.all().values():
@@ -152,11 +188,14 @@ class HBNBCommand(cmd.Cmd):
         print(count)
 
     def do_update(self, arg):
-        """Usage: update <class> <id> <attribute_name> <attribute_value> or
-       <class>.update(<id>, <attribute_name>, <attribute_value>) or
-       <class>.update(<id>, <dictionary>)
-        Update a class instance of a given id by adding or updating
-        a given attribute key/value pair or dictionary."""
+        """
+        Usage:
+            update <class> <id> <attribute_name> <attribute_value> or
+            <class>.update(<id>, <attribute_name>, <attribute_value>) or
+            <class>.update(<id>, <dictionary>)
+            Update a class instance of a given id by adding or updating
+            a given attribute key/value pair or dictionary.
+        """
         argl = parse(arg)
         objdict = storage.all()
 
@@ -201,36 +240,20 @@ class HBNBCommand(cmd.Cmd):
         storage.save()
 
 if __name__ == "__main__":
-=======
-"""Main Console for hbnb project
-"""
-import cmd
-
-from models import storage
-from models.base_model import BaseModel
-from models.user import User
-from models.amenity import Amenity
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-from shlex import split
-import re
-import json
 
 
-class HBNBCommand(cmd.Cmd):
-    """Type class HBNBCommand CLI"""
+    class HBNBCommand(cmd.Cmd):
+        """Type class HBNBCommand CLI"""
     prompt = '(hbnb) '
     __classes = {
-        'BaseModel',
-        'Amenity',
-        'Place',
-        'User',
-        'State',
-        'Review',
-        'City'
-    }
+            'BaseModel',
+            'Amenity',
+            'Place',
+            'User',
+            'State',
+            'Review',
+            'City'
+            }
 
     def emptyline(self):
         """Type method emptyline"""
@@ -253,8 +276,8 @@ class HBNBCommand(cmd.Cmd):
             print('** class doesn\'t exist **')
         else:
             cls_d = {'BaseModel': BaseModel, 'User': User, 'Amenity': Amenity,
-                     'City': City, 'Place': Place,
-                     'Review': Review, 'State': State}
+                    'City': City, 'Place': Place,
+                    'Review': Review, 'State': State}
             new_obj = cls_d[args]()
             new_obj.save()
             print('{}'.format(new_obj.id))
@@ -305,7 +328,7 @@ class HBNBCommand(cmd.Cmd):
             all_obj = storage.all()
             name = arg_list[0]
             all_obj = [str(v) for k, v in all_obj.items()
-                       if name == v.__class__.__name__]
+                    if name == v.__class__.__name__]
             print(all_obj)
 
         if yes != 1:
@@ -369,12 +392,12 @@ class HBNBCommand(cmd.Cmd):
     def default(self, arg):
         """Type method default"""
         m_dict = {
-            "all": self.do_all,
-            "show": self.do_show,
-            "destroy": self.do_destroy,
-            "count": self.do_count,
-            "update": self.do_update
-        }
+                "all": self.do_all,
+                "show": self.do_show,
+                "destroy": self.do_destroy,
+                "count": self.do_count,
+                "update": self.do_update
+                }
         m = re.search(r"\.", arg)
         if m is not None:
             marg = [arg[:m.span()[0]], arg[m.span()[1]:]]
@@ -398,5 +421,4 @@ class HBNBCommand(cmd.Cmd):
 
 
 if __name__ == '__main__':
->>>>>>> cae36e40c3bce918144ab005d638bdf77df475d8
     HBNBCommand().cmdloop()
