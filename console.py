@@ -1,38 +1,11 @@
 #!/usr/bin/python3
-"""
-Defines the HBnB console.
-
-HBNBCommand class
-
-Attributes:
-    __classes (dict): A dictionary of all the classes that can be created.
-
-Methods:
-    emptyline (self): Does nothing.
-    do_quit (self, line): Exits the shell.
-    do_EOF (self, line): Exits the shell.
-    do_create (self, args): Creates a new instance of a class.
-    do_show (self, line): Prints the information of an instance.
-    do_destroy (self, line): Deletes an instance.
-    do_all (self, args): Prints all the instances of a class.
-    do_update (self, args): Updates an instance.
-    do_count (self, line): Counts the number of instances of a class.
-    default (self, arg): Handles unknown commands.
-"""
-
-
+"""Defines the HBnB console."""
 import cmd
 import re
 from shlex import split
 from models import storage
 from models.base_model import BaseModel
-from models.user import User
-from models.amenity import Amenity
-from models.city import City
-from models.place import Place
-from models.review import Review
-from models.state import State
-import json
+
 
 def parse(arg):
     curly_braces = re.search(r"\{(.*?)\}", arg)
@@ -107,8 +80,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_create(self, arg):
         """
-        Usage: create <class>
-        Create a new class instance and print its id.
+        Usage:
+            create <class>
+            Create a new class instance and print its id.
         """
         argl = parse(arg)
         if len(argl) == 0:
@@ -121,8 +95,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_show(self, arg):
         """
-        Usage: show <class> <id> or <class>.show(<id>)
-        Display the string representation of a class instance of a given id.
+        Usage:
+            show <class> <id> or <class>.show(<id>)
+            Display the string representation of a class instance of a given id.
         """
         argl = parse(arg)
         objdict = storage.all()
@@ -139,8 +114,9 @@ class HBNBCommand(cmd.Cmd):
 
     def do_destroy(self, arg):
         """
-        Usage: destroy <class> <id> or <class>.destroy(<id>)
-        Delete a class instance of a given id.
+        Usage:
+            destroy <class> <id> or <class>.destroy(<id>)
+            Delete a class instance of a given id.
         """
         argl = parse(arg)
         objdict = storage.all()
@@ -158,9 +134,10 @@ class HBNBCommand(cmd.Cmd):
 
     def do_all(self, arg):
         """
-        Usage: all or all <class> or <class>.all()
-        Display string representations of all instances of a given class.
-        If no class is specified, displays all instantiated objects.
+        Usage:
+            all or all <class> or <class>.all()
+            Display string representations of all instances of a given class.
+            If no class is specified, displays all instantiated objects.
         """
         argl = parse(arg)
         if len(argl) > 0 and argl[0] not in HBNBCommand.__classes:
@@ -193,8 +170,8 @@ class HBNBCommand(cmd.Cmd):
             update <class> <id> <attribute_name> <attribute_value> or
             <class>.update(<id>, <attribute_name>, <attribute_value>) or
             <class>.update(<id>, <dictionary>)
-            Update a class instance of a given id by adding or updating
-            a given attribute key/value pair or dictionary.
+        Update a class instance of a given id by adding or updating
+        a given attribute key/value pair or dictionary.
         """
         argl = parse(arg)
         objdict = storage.all()
@@ -241,9 +218,44 @@ class HBNBCommand(cmd.Cmd):
 
 if __name__ == "__main__":
 
+"""
+Defines the HBnB console.
 
-    class HBNBCommand(cmd.Cmd):
-        """Type class HBNBCommand CLI"""
+HBNBCommand class
+
+Attributes:
+    __classes (dict): A dictionary of all the classes that can be created.
+
+Methods:
+    emptyline (self): Does nothing.
+    do_quit (self, line): Exits the shell.
+    do_EOF (self, line): Exits the shell.
+    do_create (self, args): Creates a new instance of a class.
+    do_show (self, line): Prints the information of an instance.
+    do_destroy (self, line): Deletes an instance.
+    do_all (self, args): Prints all the instances of a class.
+    do_update (self, args): Updates an instance.
+    do_count (self, line): Counts the number of instances of a class.
+    default (self, arg): Handles unknown commands.
+"""
+
+import cmd
+
+from models import storage
+from models.base_model import BaseModel
+from models.user import User
+from models.amenity import Amenity
+from models.city import City
+from models.place import Place
+from models.review import Review
+from models.state import State
+from shlex import split
+import re
+import json
+
+
+class HBNBCommand(cmd.Cmd):
+    """Type class HBNBCommand CLI"""
     prompt = '(hbnb) '
     __classes = {
             'BaseModel',
